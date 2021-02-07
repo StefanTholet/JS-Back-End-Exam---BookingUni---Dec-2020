@@ -5,17 +5,21 @@ const router = Router();
 
 
 router.get('/home', (req, res) => {
-
-    if (!req.session.userId) {
+    const user = req.session.user;
+    if (!user) {
         res.redirect('/guests/home');
         return;
     }
-    console.log(req.session.userId);
-    console.log(req.session.username);
-    session.save(req.session)
-    const isLoggedIn = user.isLoggedIn(req.session.userId);
-    
-    res.render('./members/home', { isLoggedIn })
+   // res.locals.user = user;
+    res.render('./members/home', user)
+})
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(function(err) {
+        console.log(err);
+        return
+    });
+    res.redirect('/')
 })
 
 module.exports = router;

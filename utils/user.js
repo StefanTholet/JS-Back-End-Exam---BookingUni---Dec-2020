@@ -7,12 +7,16 @@ async function register(user) {
     return newUser.save();
 }
 
-function login(user) {
-
+async function login(user) {
+    const dbUser = await User.findOne({
+        username: user.username
+    }).lean();
+    const passwordMatches = await security.checkUser(user, dbUser.password);
+    return passwordMatches ? dbUser : false;
 }
 
-function isLoggedIn(userId) {
-    return userId ? true : false;
+function isLoggedIn(userData) {
+    return userData ? true : false;
 }
 
 module.exports = {

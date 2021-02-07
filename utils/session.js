@@ -1,9 +1,8 @@
 const session = require('express-session');
 
-function save(currentSession, userId, username) {
-    if (userId) {
-    currentSession.userId = userId;
-    currentSession.username = username
+function save(currentSession, user) {
+    if (user) {
+    currentSession.user = user;
 }
     return currentSession.save(err => {
         if (err) {
