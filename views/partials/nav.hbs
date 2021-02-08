@@ -1,14 +1,14 @@
 <nav>
             <div class="left-container">
                 <ul>
-                    {{#if isLoggedIn}}
+                    {{#if currentUser.isLoggedIn}}
                     <li><a href="/">Home</a></li>
                     <li><a href="/members/add-hotel">Add +</a></li>
                 </ul>
             </div>
             <div class="right-container">
                 
-                <a href="" class="log-out">{{username}}</a>
+                <a href="" class="log-out">{{currentUser.username}}</a>
                 <a href="/members/logout" class="log-out">Logout</a>
                 {{else}}
                 <a href="/" class="log-out">Home</a>

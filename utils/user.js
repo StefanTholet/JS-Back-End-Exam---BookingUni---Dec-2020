@@ -15,12 +15,18 @@ async function login(user) {
     return passwordMatches ? dbUser : false;
 }
 
-function isLoggedIn(userData) {
-    return userData ? true : false;
+function isAuthenticated(req, res, next) {
+    if (req.session.currentUser) {
+    if ( !req.session.currentUser.hasOwnProperty('_id') ) {
+        res.redirect('/guests/home'); 
+        return;
+    }
+    } 
+    next();
 }
 
 module.exports = {
-    isLoggedIn,
+    isAuthenticated,
     register,
     login
 }
