@@ -49,7 +49,11 @@ router.get('/guests/login', (req, res) => {
 router.post('/guests/login', (req, res) => {
     user.login(req.body)
         .then(dbUser => {
-            const currentUser = { username: dbUser.username, _id: dbUser._id, isLoggedIn: true }
+            if (!dbUser) {
+                res.redirect('/guests/home');
+                return;
+            }
+            const currentUser = { username: dbUser.username, _id: dbUser._id, isLoggedIn: true, bookedHotels: dbUser.bookedHotels }
             session.save(req.session, currentUser);
             res.redirect('/members/home')
         })

@@ -9,8 +9,8 @@ async function hashPassword(user) {
     });
 }
 
-async function checkUser(user, dbPass) {
-    const match = await bcrypt.compare(user.password, dbPass);
+async function checkUser(userPassword, dbPass) {
+    const match = await bcrypt.compare(userPassword, dbPass);
     console.log('checking..')
     return match
 }

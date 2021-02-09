@@ -18,7 +18,7 @@
                     {{/if}}
                     {{#unless currentHotel.isOwnedByUser}}
                     {{#unless currentHotel.isBookedByUser}}
-                    <a href="" class="book">Book</a>
+                    <a href="/members/hotels/{{currentHotel._id}}/book" class="book">Book</a>
                     {{/unless}}
                     {{else}}
                     <a href="" class="edit">Edit</a>
