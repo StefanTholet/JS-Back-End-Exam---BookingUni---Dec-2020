@@ -8,7 +8,7 @@
             </div>
             <div class="right-container">
                 
-                <a href="" class="log-out">{{currentUser.username}}</a>
+                <a href="/members/{{currentUser._id}}/profile" class="log-out">{{currentUser.username}}</a>
                 <a href="/members/logout" class="log-out">Logout</a>
                 {{else}}
                 <a href="/" class="log-out">Home</a>

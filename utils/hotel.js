@@ -6,12 +6,16 @@ async function add(hotel) {
 }
 
 function findOne(_id, req) {
-    const currentUser = req.session.currentUser;
+    const currentUser = req.session.currentUser || {};
     return Hotel.findOne({ _id }).lean()
         .then(hotel => {
             hotel.isBookedByUser = hotel.bookedUsers.find(x => x == currentUser._id);
             hotel.isOwnedByUser = hotel.owner == currentUser._id;
             return hotel;
+        })
+        .catch(err => {
+            console.log(err);
+            return;
         })
 }
 
@@ -23,6 +27,9 @@ async function getAll(req) {
         console.log(currentUser)
         hotels.forEach(hotel => {
             hotel.isLoggedIn = true;
+        });
+        hotels = hotels.sort((a, b) => {
+            return b.freeRooms - a.freeRooms;
         })
         return { hotels, currentUser }
     }

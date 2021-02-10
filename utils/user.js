@@ -25,7 +25,7 @@ function isAuthenticated(req, res, next) {
         res.redirect('/guests/home');
         return;
     }
-   
+
     next();
 }
 
@@ -37,9 +37,21 @@ function updateArray(_id, arrayToUpdate, element) {
         })
 }
 
+async function findOne(_id) {
+    try {
+        let user = await User.findOne({_id}).lean();
+        return user;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+
+}
+
 module.exports = {
     isAuthenticated,
     register,
     login,
-    updateArray
+    updateArray,
+    findOne
 }

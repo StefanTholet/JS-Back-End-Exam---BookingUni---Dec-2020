@@ -49,16 +49,25 @@ router.get('/hotels/:_id/book', user.isAuthenticated, saveSession, async (req, r
     const userId = req.session.currentUser._id;
     const hotelId = req.params._id;
     try {
+        const hotelName = await hotel.findOne(hotelId, req);
+        console.log()
+
         const hasRooms = await hotel.isAvailable(hotelId);
         if (hasRooms) {
-            user.updateArray(userId, 'bookedHotels', hotelId)
+            user.updateArray(userId, 'bookedHotels', hotelName.name)
             hotel.updateArray(hotelId, 'bookedUsers', userId)
         }
     } catch (err) {
         console.log(err);
     }
-    
+
     res.redirect('/');
+})
+
+router.get('/:id/profile', user.isAuthenticated, saveSession, async (req, res) => {
+    const userDetails = await user.findOne(req.params.id);
+    currentUser = req.session.currentUser;
+    res.render('./members/profile', { currentUser, userDetails })
 })
 
 router.get('/logout', (req, res) => {
